@@ -21,6 +21,20 @@ public class BamTrimmer {
         MainFrame mainwindow = new MainFrame();
         mainwindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mainwindow.setVisible(true);
+        
+        
+    }
+    
+    public void printInput(Input in){
+        
+        String input_parameters = in.getBamFile() + "\n" +
+                in.getOutputDir()+ "\n" +
+                in.getOutputBamFile() + "\n" +
+                in.getTargetedRegions()+ "\n";
+        
+        System.out.println("bamtrimmer.BamTrimmer.printInput()");
+        System.out.println(input_parameters);
+        
     }
     
 }
