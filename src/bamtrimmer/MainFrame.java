@@ -216,8 +216,9 @@ public class MainFrame extends javax.swing.JFrame {
        
         File packageDir = BamTrimmer.getPackageBase();
         Tool t = new Tool(packageDir, bamTrimInput);        
-        t.runJar(bamTrimInput);
+        String[] slog = t.runJar(bamTrimInput);
         
+       jTextFieldInputBam.setText(slog[0]);
     }//GEN-LAST:event_jButtonRunActionPerformed
 
     /**

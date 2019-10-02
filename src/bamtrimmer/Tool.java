@@ -43,13 +43,14 @@ public class Tool {
             "FilterSamReads",
             "I=" + this.inputData.getBamFile().getAbsolutePath(),
             "O=" + this.inputData.getOutputBamFile(),
+            "Filter=includePairedIntervals",
             "INTERVAL_LIST=" + this.packagePath.getAbsolutePath() + File.separator+ ".." + File.separator +"test.bed"
         };
         
         return command;
     }
     
-    void runJar(Input bamTrimInput){
+    String[] runJar(Input bamTrimInput){
         
         String[] log =  new String[2];
         
@@ -65,10 +66,12 @@ public class Tool {
             System.out.println(log[0]);
             System.out.println(log[1]);
             
+            return log;
             
         } catch (IOException ex) {
             Logger.getLogger(Tool.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return null;
                         
     }
     
