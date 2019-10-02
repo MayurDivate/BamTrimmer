@@ -5,6 +5,7 @@
  */
 package bamtrimmer;
 
+import java.io.File;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
@@ -33,8 +34,8 @@ public class MainFrame extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jButtonOutputFolderBrowser = new javax.swing.JButton();
         jButtonBamFileBrowser = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
+        jTextFieldInputBam = new javax.swing.JTextField();
+        jTextFieldOutputFolder = new javax.swing.JTextField();
         jLabelBamfile = new javax.swing.JLabel();
         jLabelOutputFolder = new javax.swing.JLabel();
         jButtonReset = new javax.swing.JButton();
@@ -45,6 +46,7 @@ public class MainFrame extends javax.swing.JFrame {
         jMenuItem1 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setLocation(new java.awt.Point(0, 0));
 
         jButtonOutputFolderBrowser.setText("Browse");
         jButtonOutputFolderBrowser.setPreferredSize(new java.awt.Dimension(30, 25));
@@ -62,16 +64,11 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
 
-        jTextField1.setEditable(false);
-        jTextField1.setText("/path/bam");
+        jTextFieldInputBam.setEditable(false);
+        jTextFieldInputBam.setText("/path/bam");
 
-        jTextField2.setEditable(false);
-        jTextField2.setText("/path/output/folder");
-        jTextField2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField2ActionPerformed(evt);
-            }
-        });
+        jTextFieldOutputFolder.setEditable(false);
+        jTextFieldOutputFolder.setText("/path/output/folder");
 
         jLabelBamfile.setText("BAM file");
 
@@ -82,6 +79,11 @@ public class MainFrame extends javax.swing.JFrame {
 
         jButtonRun.setText("Run");
         jButtonRun.setPreferredSize(new java.awt.Dimension(30, 25));
+        jButtonRun.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonRunActionPerformed(evt);
+            }
+        });
 
         jLabelHeader.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelHeader.setText("Some Text here");
@@ -104,8 +106,8 @@ public class MainFrame extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(jLabelHeader, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.LEADING))
+                            .addComponent(jTextFieldOutputFolder, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE)
+                            .addComponent(jTextFieldInputBam, javax.swing.GroupLayout.Alignment.LEADING))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jButtonBamFileBrowser, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -122,11 +124,11 @@ public class MainFrame extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabelBamfile, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jTextFieldInputBam, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(10, 10, 10)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jTextFieldOutputFolder, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(jButtonOutputFolderBrowser, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jLabelOutputFolder, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jButtonBamFileBrowser, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -168,6 +170,20 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void jButtonOutputFolderBrowserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonOutputFolderBrowserActionPerformed
         // TODO add your handling code here:
+        JFileChooser outputFolderChooser = new JFileChooser();
+        outputFolderChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        
+        
+        outputFolderChooser.setDialogTitle("Select output folder");
+        
+        int retrunVal = outputFolderChooser.showOpenDialog(null);
+        if(retrunVal == JFileChooser.APPROVE_OPTION){
+            File outputFolder = outputFolderChooser.getSelectedFile();
+            System.out.println(outputFolder);
+            jTextFieldOutputFolder.setText(outputFolder.getAbsolutePath());
+            
+        }
+        
     }//GEN-LAST:event_jButtonOutputFolderBrowserActionPerformed
 
     private void jButtonBamFileBrowserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBamFileBrowserActionPerformed
@@ -179,7 +195,9 @@ public class MainFrame extends javax.swing.JFrame {
         
         int retrunVal = bamFileChooser.showOpenDialog(null);
         if(retrunVal == JFileChooser.APPROVE_OPTION){
-            System.out.println(bamFileChooser.getSelectedFile());
+            File inputBam = bamFileChooser.getSelectedFile();
+            System.out.println(inputBam);
+            jTextFieldInputBam.setText(inputBam.getAbsolutePath());
         }
                
     }//GEN-LAST:event_jButtonBamFileBrowserActionPerformed
@@ -189,9 +207,18 @@ public class MainFrame extends javax.swing.JFrame {
 
     }
     
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+    private void jButtonRunActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRunActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2ActionPerformed
+        
+        File inputBam = new File(jTextFieldInputBam.getText());
+        File outputFolder = new File(jTextFieldOutputFolder.getText());
+        Input bamTrimInput = new Input(inputBam, outputFolder);
+       
+        File packageDir = BamTrimmer.getPackageBase();
+        Tool t = new Tool(packageDir, bamTrimInput);        
+        t.runJar(bamTrimInput);
+        
+    }//GEN-LAST:event_jButtonRunActionPerformed
 
     /**
      * @param args the command line arguments
@@ -241,7 +268,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField jTextFieldInputBam;
+    private javax.swing.JTextField jTextFieldOutputFolder;
     // End of variables declaration//GEN-END:variables
 }

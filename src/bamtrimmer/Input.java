@@ -18,15 +18,14 @@ public class Input {
     private File outputBamFile;
     private File targetedRegions;
 
-    public Input(File bamFile, File outputDir, File targetedRegions) {
+    public Input(File bamFile, File outputDir) {
         this.bamFile = bamFile;
         this.outputDir = outputDir;
-        this.targetedRegions = targetedRegions;
     }
     
         
     public File getOutputBamFile() {
-        String baseName = this.getBamFile().getName().replace("\\.bam", "_trimmed.bam");
+        String baseName = this.getBamFile().getName().replace(".bam", "_trimmed.bam");
         File outputBamFile = new File(this.getOutputDir(), baseName);
         return outputBamFile;
     }

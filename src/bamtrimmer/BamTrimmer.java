@@ -5,6 +5,11 @@
  */
 package bamtrimmer;
 
+import java.io.File;
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 
 /**
@@ -18,23 +23,27 @@ public class BamTrimmer {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        
         MainFrame mainwindow = new MainFrame();
+        mainwindow.setLocationRelativeTo(null);
         mainwindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mainwindow.setVisible(true);
-        
-        
+       
+        getPackageBase();
     }
     
-    public void printInput(Input in){
+    public static File getPackageBase(){
+        try {
+
+            File jarFile = new File(BamTrimmer.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath());
+            System.out.println(jarFile.getAbsoluteFile());
+            return jarFile.getParentFile();
+
+        } catch (URISyntaxException ex) {
+            Logger.getLogger(BamTrimmer.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
-        String input_parameters = in.getBamFile() + "\n" +
-                in.getOutputDir()+ "\n" +
-                in.getOutputBamFile() + "\n" +
-                in.getTargetedRegions()+ "\n";
-        
-        System.out.println("bamtrimmer.BamTrimmer.printInput()");
-        System.out.println(input_parameters);
-        
+        return null;
     }
     
 }
