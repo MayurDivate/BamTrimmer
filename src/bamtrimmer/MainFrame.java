@@ -22,6 +22,7 @@ public class MainFrame extends javax.swing.JFrame {
     
     private static boolean isBamFile = false;
     private static boolean isOutputFolder = false;
+    public static MainFrame mainframe;
     
     public MainFrame() {
         initComponents();
@@ -205,7 +206,6 @@ public class MainFrame extends javax.swing.JFrame {
         int retrunVal = outputFolderChooser.showOpenDialog(null);
         if(retrunVal == JFileChooser.APPROVE_OPTION){
             File outputFolder = outputFolderChooser.getSelectedFile();
-            System.out.println(outputFolder);
             jTextFieldOutputFolder.setText(outputFolder.getAbsolutePath());
             isOutputFolder = true;
             jTextFieldOutputFolder.setForeground(Color.black);
@@ -223,7 +223,6 @@ public class MainFrame extends javax.swing.JFrame {
         int retrunVal = bamFileChooser.showOpenDialog(null);
         if(retrunVal == JFileChooser.APPROVE_OPTION){
             File inputBam = bamFileChooser.getSelectedFile();
-            System.out.println(inputBam);
             jTextFieldInputBam.setText(inputBam.getAbsolutePath());
             isBamFile = true;
             jTextFieldInputBam.setForeground(Color.black);
@@ -238,21 +237,37 @@ public class MainFrame extends javax.swing.JFrame {
     
     private void jButtonRunActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRunActionPerformed
         // TODO add your handling code here:
+        
         boolean flag = false;
         if(isBamFile && isOutputFolder){
             flag = true;
         }
         
         if(flag) {
+            
+            OutputFrame.outputframe = new OutputFrame();
+            OutputFrame.outputframe.setVisible(true);
+            OutputFrame.outputframe.setLocationRelativeTo(null);
+            MainFrame.mainframe.dispose();
+            jButtonRun.setEnabled(false);
+            
             File inputBam = new File(jTextFieldInputBam.getText());
             File outputFolder = new File(jTextFieldOutputFolder.getText());
             Input bamTrimInput = new Input(inputBam, outputFolder);
 
             File packageDir = BamTrimmer.getPackageBase();
+            
             Tool t = new Tool(packageDir, bamTrimInput);
             String[] slog = t.runJar(bamTrimInput);
+            
+            if(isSuccessful(slog[1])){
+                OutputFrame.outputframe.setLog("Finished");
+            }
+            else{
+                OutputFrame.outputframe.setLog(slog[1]);
+            }
 
-            jTextFieldInputBam.setText(slog[0]);
+            
         }
         else{
             if(!isBamFile){
@@ -265,6 +280,13 @@ public class MainFrame extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jButtonRunActionPerformed
 
+    
+    private boolean isSuccessful(String logString){
+        if(logString.contains("ERROR")){
+            return false;
+        }
+         return true;
+    }
     private void jButtonResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonResetActionPerformed
         // TODO add your handling code here:
         

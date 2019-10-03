@@ -24,10 +24,10 @@ public class BamTrimmer {
     public static void main(String[] args) {
         // TODO code application logic here
         
-        MainFrame mainwindow = new MainFrame();
-        mainwindow.setLocationRelativeTo(null);
-        mainwindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        mainwindow.setVisible(true);
+        MainFrame.mainframe = new MainFrame();
+        MainFrame.mainframe.setLocationRelativeTo(null);
+        MainFrame.mainframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        MainFrame.mainframe.setVisible(true);
        
         getPackageBase();
     }
@@ -36,7 +36,6 @@ public class BamTrimmer {
         try {
 
             File jarFile = new File(BamTrimmer.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath());
-            System.out.println(jarFile.getAbsoluteFile());
             return jarFile.getParentFile();
 
         } catch (URISyntaxException ex) {

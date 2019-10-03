@@ -63,8 +63,8 @@ public class Tool {
             log[0] = stdOUT;
             log[1] = errorLog;
             
-            System.out.println(log[0]);
-            System.out.println(log[1]);
+            System.out.println("0 >>>>>"+log[0]);
+            System.out.println("1 <<<<<"+log[1]);
             
             return log;
             
