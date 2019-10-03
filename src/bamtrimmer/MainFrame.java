@@ -54,7 +54,7 @@ public class MainFrame extends javax.swing.JFrame {
         setLocation(new java.awt.Point(0, 0));
         setResizable(false);
 
-        jPanel1.setBackground(new java.awt.Color(204, 204, 204));
+        jPanel1.setBackground(new java.awt.Color(229, 229, 229));
 
         jButtonOutputFolderBrowser.setText("Browse");
         jButtonOutputFolderBrowser.setPreferredSize(new java.awt.Dimension(30, 25));
@@ -164,8 +164,6 @@ public class MainFrame extends javax.swing.JFrame {
                     .addComponent(jButtonRun, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(5, 5, 5))
         );
-
-        jMenuBar1.setBackground(new java.awt.Color(0, 102, 255));
 
         jMenu1.setText("Help");
 
