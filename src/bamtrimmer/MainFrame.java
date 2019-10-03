@@ -210,6 +210,7 @@ public class MainFrame extends javax.swing.JFrame {
             System.out.println(outputFolder);
             jTextFieldOutputFolder.setText(outputFolder.getAbsolutePath());
             isOutputFolder = true;
+            jTextFieldOutputFolder.setForeground(Color.black);
         }
         
     }//GEN-LAST:event_jButtonOutputFolderBrowserActionPerformed
@@ -227,6 +228,7 @@ public class MainFrame extends javax.swing.JFrame {
             System.out.println(inputBam);
             jTextFieldInputBam.setText(inputBam.getAbsolutePath());
             isBamFile = true;
+            jTextFieldInputBam.setForeground(Color.black);
         }
                
     }//GEN-LAST:event_jButtonBamFileBrowserActionPerformed
