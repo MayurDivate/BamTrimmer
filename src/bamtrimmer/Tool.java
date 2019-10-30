@@ -19,14 +19,14 @@ import picard.sam.FilterSamReads;
  */
 public class Tool {
     private File packagePath;
-    private Input inputData;
+    private InputData inputData;
 
-    public Tool(File packagePath, Input inputData) {
+    public Tool(File packagePath, InputData inputData) {
         this.packagePath = packagePath;
         this.inputData = inputData;
     }
 
-    public Input getInputData() {
+    public InputData getInputData() {
         return inputData;
     }
 
@@ -41,7 +41,7 @@ public class Tool {
             "-jar",
             this.getPackagePath().getAbsolutePath() + File.separator + "lib"+ File.separator + "picard.jar",
             "FilterSamReads",
-            "I=" + this.inputData.getBamFile().getAbsolutePath(),
+            "I=" + this.inputData.getInputBamFile().getAbsolutePath(),
             "O=" + this.inputData.getOutputBamFile(),
             "Filter=includePairedIntervals",
             "INTERVAL_LIST=" + this.packagePath.getAbsolutePath() + File.separator+ ".." + File.separator +"test.bed"
@@ -50,12 +50,34 @@ public class Tool {
         return command;
     }
     
-    String[] runJar(Input bamTrimInput){
+    String[] getMarkDuplicateCommand(){
+         String[] command = {
+            "java",
+            "-jar",
+            this.getPackagePath().getAbsolutePath() + File.separator + "lib"+ File.separator + "picard.jar",
+            "MarkDuplicates",
+            "I=" + this.inputData.getInputBamFile().getAbsolutePath(),
+            "O=" + this.inputData.getDuplicateMarkedBamFile(),
+            "M=marked_dup_metrics.txt",
+            "REMOVE_DUPLICATES=true"
+        };
+        
+        return command;
+        
+    }
+   
+    
+   String[] runJar(String[] command){
         
         String[] log =  new String[2];
         
+        for(String s : command){
+            System.out.println(s);
+        }
+        
+        
         try{
-            ProcessBuilder picardProcessBuilder = new ProcessBuilder(this.getCommand());
+            ProcessBuilder picardProcessBuilder = new ProcessBuilder(command);
             picardProcessBuilder.directory();
             Process process =  picardProcessBuilder.start();
             String stdOUT = this.getSTDoutput(process);
@@ -74,7 +96,6 @@ public class Tool {
         return null;
                         
     }
-    
     
     
     public String getSTDoutput(Process process){
@@ -112,5 +133,12 @@ public class Tool {
         
     }
     
+    
+    private boolean isSuccessful(String logString){
+        if(logString.contains("ERROR")){
+            return false;
+        }
+         return true;
+    }
     
 }

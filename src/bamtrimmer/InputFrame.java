@@ -14,17 +14,16 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  *
  * @author n10337547
  */
-public class MainFrame extends javax.swing.JFrame {
+public class InputFrame extends javax.swing.JFrame {
 
     /**
      * Creates new form Main
      */
-    
     private static boolean isBamFile = false;
     private static boolean isOutputFolder = false;
-    public static MainFrame mainframe;
-    
-    public MainFrame() {
+    public static InputFrame mainframe;
+
+    public InputFrame() {
         initComponents();
     }
 
@@ -160,7 +159,7 @@ public class MainFrame extends javax.swing.JFrame {
                         .addComponent(jButtonOutputFolderBrowser, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jButtonBamFileBrowser, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(5, 5, 5)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButtonReset, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonRun, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(5, 5, 5))
@@ -199,18 +198,17 @@ public class MainFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
         JFileChooser outputFolderChooser = new JFileChooser();
         outputFolderChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-        
-        
+
         outputFolderChooser.setDialogTitle("Select output folder");
-        
+
         int retrunVal = outputFolderChooser.showOpenDialog(null);
-        if(retrunVal == JFileChooser.APPROVE_OPTION){
+        if (retrunVal == JFileChooser.APPROVE_OPTION) {
             File outputFolder = outputFolderChooser.getSelectedFile();
             jTextFieldOutputFolder.setText(outputFolder.getAbsolutePath());
             isOutputFolder = true;
             jTextFieldOutputFolder.setForeground(Color.black);
         }
-        
+
     }//GEN-LAST:event_jButtonOutputFolderBrowserActionPerformed
 
     private void jButtonBamFileBrowserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBamFileBrowserActionPerformed
@@ -219,83 +217,77 @@ public class MainFrame extends javax.swing.JFrame {
         bamFileChooser.setAcceptAllFileFilterUsed(false);
         bamFileChooser.addChoosableFileFilter(getFileNameExtensionFilter());
         bamFileChooser.setDialogTitle("Select input bam file");
-        
+
         int retrunVal = bamFileChooser.showOpenDialog(null);
-        if(retrunVal == JFileChooser.APPROVE_OPTION){
+        if (retrunVal == JFileChooser.APPROVE_OPTION) {
             File inputBam = bamFileChooser.getSelectedFile();
             jTextFieldInputBam.setText(inputBam.getAbsolutePath());
             isBamFile = true;
             jTextFieldInputBam.setForeground(Color.black);
         }
-               
+
     }//GEN-LAST:event_jButtonBamFileBrowserActionPerformed
 
-    FileNameExtensionFilter getFileNameExtensionFilter(){
+    FileNameExtensionFilter getFileNameExtensionFilter() {
         return new FileNameExtensionFilter("bam file", "bam");
 
     }
-    
+
     private void jButtonRunActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRunActionPerformed
         // TODO add your handling code here:
-        
+
         boolean flag = false;
-        if(isBamFile && isOutputFolder){
+        if (isBamFile && isOutputFolder) {
             flag = true;
         }
-        
-        if(flag) {
-            
-            OutputFrame.outputframe = new OutputFrame();
-            OutputFrame.outputframe.setVisible(true);
-            OutputFrame.outputframe.setLocationRelativeTo(null);
-            MainFrame.mainframe.dispose();
-            jButtonRun.setEnabled(false);
-            
-            File inputBam = new File(jTextFieldInputBam.getText());
-            File outputFolder = new File(jTextFieldOutputFolder.getText());
-            Input bamTrimInput = new Input(inputBam, outputFolder);
 
-            File packageDir = BamTrimmer.getPackageBase();
-            
-            Tool t = new Tool(packageDir, bamTrimInput);
-            String[] slog = t.runJar(bamTrimInput);
-            
-            if(isSuccessful(slog[1])){
-                OutputFrame.outputframe.setLog("Finished");
-            }
-            else{
-                OutputFrame.outputframe.setLog(slog[1]);
-            }
+        if (flag) {
 
-            
-        }
-        else{
-            if(!isBamFile){
+                OutputFrame.outputframe = new OutputFrame();
+                OutputFrame.outputframe.setVisible(true);
+                OutputFrame.outputframe.setLocationRelativeTo(null);
+                InputFrame.mainframe.dispose();
+                jButtonRun.setEnabled(false);
+
+                File inputBam = new File(jTextFieldInputBam.getText());
+                File outputFolder = new File(jTextFieldOutputFolder.getText());
+                InputData bamTrimInput = new InputData(inputBam, outputFolder);
+
+                Preprocessor.runBamTrimming(bamTrimInput);
+                
+                    /**
+                     * if(isSuccessful(slog[1])){
+                     * OutputFrame.outputframe.setLog("Finished"); } else{
+                     * OutputFrame.outputframe.setLog(slog[1]); }
+                     *
+                     *
+                     */
+        } else {
+            if (!isBamFile) {
                 jTextFieldInputBam.setForeground(Color.red);
-             }
-            if(!isOutputFolder){
+            }
+            if (!isOutputFolder) {
                 jTextFieldOutputFolder.setForeground(Color.red);
             }
         }
 
     }//GEN-LAST:event_jButtonRunActionPerformed
 
-    
-    private boolean isSuccessful(String logString){
-        if(logString.contains("ERROR")){
+    private boolean isSuccessful(String logString) {
+        if (logString.contains("ERROR")) {
             return false;
         }
-         return true;
+        return true;
     }
     private void jButtonResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonResetActionPerformed
         // TODO add your handling code here:
-        
+
         jTextFieldInputBam.setText("/path/BAM");
         jTextFieldOutputFolder.setText("/path/output/folder");
-        
+
         isBamFile = false;
         isOutputFolder = false;
-        
+
     }//GEN-LAST:event_jButtonResetActionPerformed
 
     private void jTextFieldOutputFolderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldOutputFolderActionPerformed
@@ -309,7 +301,7 @@ public class MainFrame extends javax.swing.JFrame {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -319,21 +311,23 @@ public class MainFrame extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(InputFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(InputFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(InputFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(InputFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new MainFrame().setVisible(true);
+                new InputFrame().setVisible(true);
             }
         });
     }

@@ -6,7 +6,6 @@
 package bamtrimmer;
 
 import java.io.File;
-import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -22,27 +21,23 @@ public class BamTrimmer {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
-        
-        MainFrame.mainframe = new MainFrame();
-        MainFrame.mainframe.setLocationRelativeTo(null);
-        MainFrame.mainframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        MainFrame.mainframe.setVisible(true);
-       
-        getPackageBase();
+         // TODO code application logic here
+
+         InputFrame.mainframe = new InputFrame();
+         InputFrame.mainframe.setLocationRelativeTo(null);
+         InputFrame.mainframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+         InputFrame.mainframe.setVisible(true);
+
+         getPackageBase();
     }
-    
-    public static File getPackageBase(){
-        try {
 
-            File jarFile = new File(BamTrimmer.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath());
-            return jarFile.getParentFile();
-
-        } catch (URISyntaxException ex) {
-            Logger.getLogger(BamTrimmer.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
+    public static File getPackageBase() {
+         try {
+                  File jarFile = new File(BamTrimmer.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath());
+                  return jarFile.getParentFile();
+         } catch (URISyntaxException ex) {
+                  Logger.getLogger(BamTrimmer.class.getName()).log(Level.SEVERE, null, ex);
+         }
         return null;
     }
-    
 }
