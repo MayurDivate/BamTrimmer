@@ -40,4 +40,6 @@ public class BamTrimmer {
          }
         return null;
     }
+    
+    
 }

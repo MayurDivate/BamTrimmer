@@ -8,6 +8,7 @@ package bamtrimmer;
 import java.awt.Color;
 import java.io.File;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
@@ -242,26 +243,11 @@ public class InputFrame extends javax.swing.JFrame {
         }
 
         if (flag) {
-
-                OutputFrame.outputframe = new OutputFrame();
-                OutputFrame.outputframe.setVisible(true);
-                OutputFrame.outputframe.setLocationRelativeTo(null);
-                InputFrame.mainframe.dispose();
-                jButtonRun.setEnabled(false);
-
-                File inputBam = new File(jTextFieldInputBam.getText());
-                File outputFolder = new File(jTextFieldOutputFolder.getText());
-                InputData bamTrimInput = new InputData(inputBam, outputFolder);
-
-                Preprocessor.runBamTrimming(bamTrimInput);
                 
-                    /**
-                     * if(isSuccessful(slog[1])){
-                     * OutputFrame.outputframe.setLog("Finished"); } else{
-                     * OutputFrame.outputframe.setLog(slog[1]); }
-                     *
-                     *
-                     */
+                    InputFrame.mainframe.dispose();
+                    jButtonRun.setEnabled(false);
+                    new Preprocessor().runBamTrimming(this.getInputdata());
+                
         } else {
             if (!isBamFile) {
                 jTextFieldInputBam.setForeground(Color.red);
@@ -273,12 +259,14 @@ public class InputFrame extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jButtonRunActionPerformed
 
-    private boolean isSuccessful(String logString) {
-        if (logString.contains("ERROR")) {
-            return false;
-        }
-        return true;
+    
+    
+    private InputData getInputdata(){
+         File inputBam = new File(jTextFieldInputBam.getText());
+         File outputFolder = new File(jTextFieldOutputFolder.getText());
+         return new InputData(inputBam, outputFolder);
     }
+    
     private void jButtonResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonResetActionPerformed
         // TODO add your handling code here:
 

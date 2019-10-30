@@ -6,6 +6,11 @@
 package bamtrimmer;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -13,29 +18,57 @@ import java.io.File;
  */
 public class Preprocessor {
     
-    
-    
-    static void runBamTrimming(InputData inputData){
-       
-         File packageDir = BamTrimmer.getPackageBase();
-         //Tool t = new Tool(packageDir, inputData);
-         //String[] slog = t.runJar(inputData);
-            
+    public void runBamTrimming(InputData inputData){
+                   
          System.out.println("bamtrimmer.AnalysisWorkflow.runBamTrimming()");
-         System.out.println(inputData);
-       
-         boolean flag = false; 
-         // 1. remove unmapped reads 
+         File packageDir = BamTrimmer.getPackageBase();
+         inputData.getLogFile().delete();
          
+         // get the Tool object 
          Tool tool = new Tool(packageDir, inputData);
+         if(this.setOutputFrameVisible()){
+             JOptionPane.showMessageDialog(OutputFrame.outputframe, "Processing wait");
+             boolean isSuccess = this.preprocessBam(tool);
+             if(isSuccess){
+                inputData.getLogFile().getAbsoluteFile();
+            }
+         }
          
-         String[] log = tool.runJar(tool.getMarkDuplicateCommand());
-         
-         String[] log2 = tool.runJar(tool.getCommand());
-        
     }
     
+    private boolean setOutputFrameVisible(){
+        OutputFrame.outputframe = new OutputFrame();
+        OutputFrame.outputframe.setVisible(true);
+        OutputFrame.outputframe.setLocationRelativeTo(null);
+        
+        return OutputFrame.outputframe.isVisible();
+    }
     
+    private boolean preprocessBam(Tool tool){
+         boolean flag = false;
+         
+         // Filter Sam Reads
+            flag = tool.runJar(tool.getFilterSamReadsCommand(), "Filter Sam Reads");
+         
+        // Mark Duplicates 
+         if(flag){
+            flag = tool.runJar(tool.getMarkDuplicateCommand(), "Mark Duplictes");
+         }
+         else{
+             OutputFrame.outputframe.setLog("ERROR : Filte Sam Reads Failed, check log file for more details.");
+             return false;
+         }
+         
+         if(flag){
+             System.out.println(" ---- Done --- )");
+             OutputFrame.outputframe.setLog("Finished");
+             return true;
+         }
+         else{
+             OutputFrame.outputframe.setLog("ERROR : Mark Duplicate Reads Failed, check log file for more details.");
+             return false;
+         }
+    }
     
     
 }

@@ -17,14 +17,17 @@ public class InputData {
     private File outputDir;
     private File outputBamFile;
     private File duplicateMarkedBamFile;
+    private File logFile;
 
     public InputData(File inputBamFile, File outputDir) {
         this.inputBamFile = inputBamFile;
         this.outputDir = outputDir;
         this.outputBamFile = getOutXBamFile(inputBamFile, outputDir, "_Trimmed.bam");
-        this.duplicateMarkedBamFile = getOutXBamFile(inputBamFile, outputDir, "_DuplicateMarked.bam");        
+        this.duplicateMarkedBamFile = getOutXBamFile(inputBamFile, outputDir, "_DuplicateMarked.bam"); 
+        this.logFile = getOutXBamFile(inputBamFile, outputDir, "_log.txt");
+        
     }
-    
+        
     public static File getOutXBamFile(File inputbam,  File outputdir, String suffix) {
         String baseName = inputbam.getName().replace(".bam", suffix);
         File outputBamFile = new File(outputdir, baseName);
@@ -82,5 +85,8 @@ public class InputData {
         return outputBamFile;
     }
 
+    public File getLogFile() {
+        return logFile;
+    }
     
 }

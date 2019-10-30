@@ -7,8 +7,10 @@ package bamtrimmer;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import picard.sam.FilterSamReads;
@@ -35,7 +37,7 @@ public class Tool {
     }
     
     
-    String[] getCommand(){
+    String[] getFilterSamReadsCommand(){
         String[] command = {
             "java",
             "-jar",
@@ -44,7 +46,7 @@ public class Tool {
             "I=" + this.inputData.getInputBamFile().getAbsolutePath(),
             "O=" + this.inputData.getOutputBamFile(),
             "Filter=includePairedIntervals",
-            "INTERVAL_LIST=" + this.packagePath.getAbsolutePath() + File.separator+ ".." + File.separator +"test.bed"
+            "INTERVAL_LIST=" + this.packagePath.getAbsolutePath() + File.separator+ ".." + File.separator +"BGG.bed"
         };
         
         return command;
@@ -67,7 +69,7 @@ public class Tool {
     }
    
     
-   String[] runJar(String[] command){
+   boolean runJar(String[] command, String header){
         
         String[] log =  new String[2];
         
@@ -85,15 +87,13 @@ public class Tool {
             log[0] = stdOUT;
             log[1] = errorLog;
             
-            System.out.println("0 >>>>>"+log[0]);
-            System.out.println("1 <<<<<"+log[1]);
-            
-            return log;
+            this.writelog(header, log);
+            return isSuccessful(stdOUT + errorLog);
             
         } catch (IOException ex) {
             Logger.getLogger(Tool.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return null;
+        return false;
                         
     }
     
@@ -132,8 +132,39 @@ public class Tool {
         }
         
     }
-    
-    
+
+    private boolean writelog(String header, String[] log){
+        
+        System.out.println("bamtrimmer.Tool.writelog()");
+        
+        PrintWriter logPrintWriter;
+        try {
+                logPrintWriter = new PrintWriter(this.getInputData().getLogFile());
+                logPrintWriter.append("---------------------------------------------------");
+                logPrintWriter.append("\n");
+                logPrintWriter.append(header);
+                logPrintWriter.append("\n");
+                logPrintWriter.flush();
+                logPrintWriter.append("-------------------STDOUT-----------------------");
+                logPrintWriter.append("\n");
+                logPrintWriter.append(log[0]);
+                logPrintWriter.append("\n");
+                logPrintWriter.flush();
+                logPrintWriter.append("------------------STDERROR---------------------");
+                logPrintWriter.append("\n");
+                logPrintWriter.append(log[1]);
+                logPrintWriter.append("\n");
+                logPrintWriter.flush();
+                logPrintWriter.append("---------------------***--------------------------");
+                logPrintWriter.append("\n");
+                logPrintWriter.close();                
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(Tool.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return false;
+    }
+
     private boolean isSuccessful(String logString){
         if(logString.contains("ERROR")){
             return false;
