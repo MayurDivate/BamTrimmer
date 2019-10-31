@@ -13,6 +13,9 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Manual"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem1ActionPerformed"/>
+              </Events>
             </MenuItem>
           </SubComponents>
         </Menu>
@@ -21,6 +24,7 @@
   </NonVisualComponents>
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
+    <Property name="title" type="java.lang.String" value="Bam Trimmer"/>
     <Property name="location" type="java.awt.Point" editor="org.netbeans.beaninfo.editors.PointEditor">
       <Point value="[0, 0]"/>
     </Property>
@@ -115,25 +119,25 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jLabelBamfile" min="-2" pref="30" max="-2" attributes="0"/>
-                              <Component id="jTextFieldInputBam" min="-2" pref="30" max="-2" attributes="0"/>
+                              <Component id="jLabelBamfile" min="-2" pref="35" max="-2" attributes="0"/>
+                              <Component id="jTextFieldInputBam" min="-2" pref="35" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jTextFieldOutputFolder" min="-2" pref="30" max="-2" attributes="0"/>
-                              <Component id="jLabelOutputFolder" min="-2" pref="30" max="-2" attributes="0"/>
+                              <Component id="jTextFieldOutputFolder" min="-2" pref="35" max="-2" attributes="0"/>
+                              <Component id="jLabelOutputFolder" min="-2" pref="35" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="40" pref="40" max="-2" attributes="0"/>
-                          <Component id="jButtonOutputFolderBrowser" min="-2" pref="30" max="-2" attributes="0"/>
+                          <Component id="jButtonOutputFolderBrowser" min="-2" pref="35" max="-2" attributes="0"/>
                       </Group>
-                      <Component id="jButtonBamFileBrowser" alignment="0" min="-2" pref="30" max="-2" attributes="0"/>
+                      <Component id="jButtonBamFileBrowser" alignment="0" min="-2" pref="35" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jButtonReset" alignment="0" min="-2" pref="30" max="-2" attributes="0"/>
-                      <Component id="jButtonRun" alignment="0" min="-2" pref="30" max="-2" attributes="0"/>
+                      <Component id="jButtonReset" alignment="0" min="-2" pref="35" max="-2" attributes="0"/>
+                      <Component id="jButtonRun" alignment="0" min="-2" pref="35" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
               </Group>
@@ -228,7 +232,7 @@
               <Color blue="ff" green="33" red="0" type="rgb"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="0"/>
-            <Property name="text" type="java.lang.String" value="BAM File Trimmer Tool for Transfusion Catalyst"/>
+            <Property name="text" type="java.lang.String" value="BAM Trimmer for RBCeq"/>
           </Properties>
         </Component>
       </SubComponents>

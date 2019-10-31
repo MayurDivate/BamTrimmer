@@ -44,7 +44,7 @@ public class Tool {
             this.getPackagePath().getAbsolutePath() + File.separator + "lib"+ File.separator + "picard.jar",
             "FilterSamReads",
             "I=" + this.inputData.getInputBamFile().getAbsolutePath(),
-            "O=" + this.inputData.getOutputBamFile(),
+            "O=" + this.inputData.getFilteredBamFile(),
             "Filter=includePairedIntervals",
             "INTERVAL_LIST=" + this.packagePath.getAbsolutePath() + File.separator+ ".." + File.separator +"BGG.bed"
         };

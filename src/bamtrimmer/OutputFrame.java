@@ -5,7 +5,12 @@
  */
 package bamtrimmer;
 
+import java.awt.Desktop;
 import java.awt.event.WindowEvent;
+import java.io.File;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -18,6 +23,7 @@ public class OutputFrame extends javax.swing.JFrame {
      */
     
     public static OutputFrame outputframe;
+    public static File OUTPUTFOLDER;
     
     public OutputFrame() {
         initComponents();
@@ -33,10 +39,12 @@ public class OutputFrame extends javax.swing.JFrame {
     private void initComponents() {
 
         jButtonClose = new javax.swing.JButton();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jTextAreaMessage = new javax.swing.JTextArea();
+        jLabelOutMsg = new javax.swing.JLabel();
+        jButtonOutputFolder = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Bam Trimmer");
+        setPreferredSize(new java.awt.Dimension(600, 200));
         setResizable(false);
 
         jButtonClose.setText("Close");
@@ -47,33 +55,46 @@ public class OutputFrame extends javax.swing.JFrame {
             }
         });
 
-        jTextAreaMessage.setEditable(false);
-        jTextAreaMessage.setColumns(20);
-        jTextAreaMessage.setRows(5);
-        jTextAreaMessage.setText("Processing . . . ");
-        jScrollPane2.setViewportView(jTextAreaMessage);
+        jLabelOutMsg.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelOutMsg.setText("Please wait, BAM trimmer is processing the file . . .");
+
+        jButtonOutputFolder.setText("Output Folder");
+        jButtonOutputFolder.setEnabled(false);
+        jButtonOutputFolder.setInheritsPopupMenu(true);
+        jButtonOutputFolder.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonOutputFolderActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(147, 147, 147)
-                .addComponent(jButtonClose)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 409, Short.MAX_VALUE)
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabelOutMsg, javax.swing.GroupLayout.PREFERRED_SIZE, 570, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(15, 15, 15))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(105, 105, 105)
+                .addComponent(jButtonOutputFolder, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(150, 150, 150)
+                .addComponent(jButtonClose, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(105, 105, 105))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButtonClose, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGap(20, 20, 20)
+                .addComponent(jLabelOutMsg, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(jButtonClose, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(15, 15, 15)
+                        .addComponent(jButtonOutputFolder, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(15, 15, 15))
         );
 
         pack();
@@ -84,10 +105,23 @@ public class OutputFrame extends javax.swing.JFrame {
          this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
     }//GEN-LAST:event_jButtonCloseActionPerformed
 
-    public void setLog(String log){
+    private void jButtonOutputFolderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonOutputFolderActionPerformed
+        // TODO add your handling code here:
+        Desktop desktop = Desktop.getDesktop();
         
-       jTextAreaMessage.setText(log);
-        jButtonClose.setEnabled(true);
+        try{
+            desktop.open(OUTPUTFOLDER);
+        } catch (IOException ex) {
+            Logger.getLogger(OutputFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }//GEN-LAST:event_jButtonOutputFolderActionPerformed
+
+    public void setLog(String log){
+       jLabelOutMsg.setText(log);
+       jButtonClose.setEnabled(true);
+       jButtonOutputFolder.setEnabled(true);
+        
     }
     /**
      * @param args the command line arguments
@@ -126,7 +160,7 @@ public class OutputFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonClose;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextArea jTextAreaMessage;
+    private javax.swing.JButton jButtonOutputFolder;
+    private javax.swing.JLabel jLabelOutMsg;
     // End of variables declaration//GEN-END:variables
 }

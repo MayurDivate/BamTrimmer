@@ -15,15 +15,15 @@ public class InputData {
     
     private File inputBamFile;
     private File outputDir;
-    private File outputBamFile;
+    private File outputFilteredBamFile;
     private File duplicateMarkedBamFile;
     private File logFile;
 
     public InputData(File inputBamFile, File outputDir) {
         this.inputBamFile = inputBamFile;
         this.outputDir = outputDir;
-        this.outputBamFile = getOutXBamFile(inputBamFile, outputDir, "_Trimmed.bam");
-        this.duplicateMarkedBamFile = getOutXBamFile(inputBamFile, outputDir, "_DuplicateMarked.bam"); 
+        this.outputFilteredBamFile = getOutXBamFile(inputBamFile, outputDir, "_filtered.bam");
+        this.duplicateMarkedBamFile = getOutXBamFile(inputBamFile, outputDir, "_trimmed_dupmark.bam"); 
         this.logFile = getOutXBamFile(inputBamFile, outputDir, "_log.txt");
         
     }
@@ -40,7 +40,7 @@ public class InputData {
         input_data = input_data + "input bam: "+ this.getInputBamFile().getAbsolutePath()+ "\n";
         input_data = input_data + "trimmed bam: "+ this.getDuplicateMarkedBamFile().getAbsolutePath()+ "\n";
         input_data = input_data + "output folder: "+ this.getOutputDir().getAbsolutePath()+ "\n";
-        input_data = input_data + "trimmed bam: "+ this.getOutputBamFile().getAbsolutePath()+ "\n";
+        input_data = input_data + "trimmed bam: "+ this.getFilteredBamFile().getAbsolutePath()+ "\n";
         input_data = input_data + " --- --- --- "+ "\n";
         
         return input_data; //To change body of generated methods, choose Tools | Templates.
@@ -81,8 +81,8 @@ public class InputData {
         return duplicateMarkedBamFile;
     }
 
-    public File getOutputBamFile() {
-        return outputBamFile;
+    public File getFilteredBamFile() {
+        return outputFilteredBamFile;
     }
 
     public File getLogFile() {

@@ -27,6 +27,7 @@ public class Preprocessor {
          // get the Tool object 
          Tool tool = new Tool(packageDir, inputData);
          if(this.setOutputFrameVisible()){
+             OutputFrame.OUTPUTFOLDER = inputData.getOutputDir();
              JOptionPane.showMessageDialog(OutputFrame.outputframe, "Processing wait");
              boolean isSuccess = this.preprocessBam(tool);
              if(isSuccess){
@@ -61,7 +62,10 @@ public class Preprocessor {
          
          if(flag){
              System.out.println(" ---- Done --- )");
-             OutputFrame.outputframe.setLog("Finished");
+             //if(tool.getInputData().getFilteredBamFile().exists()){
+              //   tool.getInputData().getFilteredBamFile().delete();
+             //}
+             OutputFrame.outputframe.setLog("BAM file processing finished!");
              return true;
          }
          else{
