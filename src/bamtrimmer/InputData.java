@@ -18,12 +18,14 @@ public class InputData {
     private File outputFilteredBamFile;
     private File duplicateMarkedBamFile;
     private File logFile;
-
+    private File coverageBed;
+    
     public InputData(File inputBamFile, File outputDir) {
         this.inputBamFile = inputBamFile;
         this.outputDir = outputDir;
         this.outputFilteredBamFile = getOutXBamFile(inputBamFile, outputDir, "_filtered.bam");
-        this.duplicateMarkedBamFile = getOutXBamFile(inputBamFile, outputDir, "_trimmed_dupmark.bam"); 
+        this.duplicateMarkedBamFile = getOutXBamFile(inputBamFile, outputDir, "_trimmed_dupmark.bam");
+        this.coverageBed = getOutXBamFile(inputBamFile, outputDir, "_coverage.bed");
         this.logFile = getOutXBamFile(inputBamFile, outputDir, "_log.txt");
         
     }
@@ -87,6 +89,10 @@ public class InputData {
 
     public File getLogFile() {
         return logFile;
+    }
+
+    public File getCoverageBed() {
+        return coverageBed;
     }
     
 }

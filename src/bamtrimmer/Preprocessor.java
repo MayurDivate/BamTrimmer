@@ -61,15 +61,20 @@ public class Preprocessor {
          }
          
          if(flag){
+             flag = tool.runJar(tool.getCoverageBedCommand(), "Coverage Bed");
+         }
+         else{
+             OutputFrame.outputframe.setLog("ERROR : Mark Duplicates Failed, check log file for more details.");
+             return false;
+         }
+         
+         if(flag){
              System.out.println(" ---- Done --- )");
-             //if(tool.getInputData().getFilteredBamFile().exists()){
-              //   tool.getInputData().getFilteredBamFile().delete();
-             //}
              OutputFrame.outputframe.setLog("BAM file processing finished!");
              return true;
          }
          else{
-             OutputFrame.outputframe.setLog("ERROR : Mark Duplicate Reads Failed, check log file for more details.");
+             OutputFrame.outputframe.setLog("ERROR : Coverage bed failed, check log file for more details.");
              return false;
          }
     }

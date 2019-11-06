@@ -35,8 +35,7 @@ public class Tool {
     public File getPackagePath() {
         return packagePath;
     }
-    
-    
+     
     String[] getFilterSamReadsCommand(){
         String[] command = {
             "java",
@@ -68,6 +67,20 @@ public class Tool {
         
     }
    
+     String[] getCoverageBedCommand(){
+        String[] command = {
+            "java",
+            "-jar",
+            this.getPackagePath().getAbsolutePath() + File.separator + "lib"+ File.separator + "bamstats04.jar",
+            "-B",
+            this.packagePath.getAbsolutePath() + File.separator+ ".." + File.separator +"BAMSTAtinput.bed",
+            this.inputData.getDuplicateMarkedBamFile().getAbsolutePath(),
+            "-o",
+            this.inputData.getCoverageBed().getAbsolutePath(),
+        };
+        
+        return command;
+    }
     
    boolean runJar(String[] command, String header){
         
@@ -96,7 +109,6 @@ public class Tool {
         return false;
                         
     }
-    
     
     public String getSTDoutput(Process process){
         try {
