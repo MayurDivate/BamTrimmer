@@ -6,14 +6,15 @@
 package bamtrimmer;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import picard.sam.FilterSamReads;
     
 /**
  *
@@ -45,7 +46,8 @@ public class Tool {
             "I=" + this.inputData.getInputBamFile().getAbsolutePath(),
             "O=" + this.inputData.getFilteredBamFile(),
             "Filter=includePairedIntervals",
-            "INTERVAL_LIST=" + this.packagePath.getAbsolutePath() + File.separator+ ".." + File.separator +"BGG.bed"
+            "INTERVAL_LIST=" + this.packagePath.getAbsolutePath() + File.separator+ ".." + File.separator +"BGG.bed",
+            "USE_JDK_DEFLATER=true", "USE_JDK_INFLATER=true"
         };
         
         return command;
@@ -60,14 +62,15 @@ public class Tool {
             "I=" + this.inputData.getInputBamFile().getAbsolutePath(),
             "O=" + this.inputData.getDuplicateMarkedBamFile(),
             "M=marked_dup_metrics.txt",
-            "REMOVE_DUPLICATES=true"
+            "REMOVE_DUPLICATES=true",
+            "USE_JDK_DEFLATER=true", "USE_JDK_INFLATER=true"
         };
         
         return command;
         
     }
    
-     String[] getCoverageBedCommand(){
+    String[] getCoverageBedCommand(){
         String[] command = {
             "java",
             "-jar",
@@ -76,7 +79,19 @@ public class Tool {
             this.packagePath.getAbsolutePath() + File.separator+ ".." + File.separator +"BAMSTAtinput.bed",
             this.inputData.getDuplicateMarkedBamFile().getAbsolutePath(),
             "-o",
-            this.inputData.getCoverageBed().getAbsolutePath(),
+            this.inputData.getCoverageBed().getAbsolutePath()
+        };
+        
+        return command;
+    }
+    
+    String[] getBamIndexCommand(){
+         String[] command = {
+            "java", "-jar",
+            this.getPackagePath().getAbsolutePath() + File.separator + "lib"+ File.separator + "picard.jar",
+            "BuildBamIndex",
+            "I=" + this.inputData.getDuplicateMarkedBamFile().getAbsolutePath(),
+            "USE_JDK_DEFLATER=true", "USE_JDK_INFLATER=true"
         };
         
         return command;
@@ -149,9 +164,10 @@ public class Tool {
         
         System.out.println("bamtrimmer.Tool.writelog()");
         
-        PrintWriter logPrintWriter;
         try {
-                logPrintWriter = new PrintWriter(this.getInputData().getLogFile());
+                FileWriter fw = new FileWriter(this.getInputData().getLogFile(), true);
+                BufferedWriter bw = new BufferedWriter(fw); 
+                PrintWriter logPrintWriter = new PrintWriter(bw);
                 logPrintWriter.append("---------------------------------------------------");
                 logPrintWriter.append("\n");
                 logPrintWriter.append(header);
@@ -172,13 +188,15 @@ public class Tool {
                 logPrintWriter.close();                
         } catch (FileNotFoundException ex) {
             Logger.getLogger(Tool.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(Tool.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         return false;
     }
 
     private boolean isSuccessful(String logString){
-        if(logString.contains("ERROR")){
+        if(logString.contains("ERROR") || logString.contains("failure")){
             return false;
         }
          return true;

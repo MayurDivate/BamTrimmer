@@ -61,10 +61,18 @@ public class Preprocessor {
          }
          
          if(flag){
-             flag = tool.runJar(tool.getCoverageBedCommand(), "Coverage Bed");
+             flag = tool.runJar(tool.getBamIndexCommand(), "Bam Index");
          }
          else{
              OutputFrame.outputframe.setLog("ERROR : Mark Duplicates Failed, check log file for more details.");
+             return false;
+         }
+         
+         if(flag){
+            flag = tool.runJar(tool.getCoverageBedCommand(), "Coverage Bed");
+         }
+         else{
+             OutputFrame.outputframe.setLog("ERROR : Bam indexing Failed, check log file for more details.");
              return false;
          }
          
@@ -78,6 +86,5 @@ public class Preprocessor {
              return false;
          }
     }
-    
     
 }
