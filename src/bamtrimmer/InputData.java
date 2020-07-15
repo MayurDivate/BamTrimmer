@@ -19,14 +19,31 @@ public class InputData {
     private File duplicateMarkedBamFile;
     private File logFile;
     private File coverageBed;
+    private boolean isTrim; 
     
-    public InputData(File inputBamFile, File outputDir) {
+    public InputData(File inputBamFile, File outputDir, boolean isTrim) {
         this.inputBamFile = inputBamFile;
         this.outputDir = outputDir;
         this.outputFilteredBamFile = getOutXBamFile(inputBamFile, outputDir, "_filtered.bam");
         this.duplicateMarkedBamFile = getOutXBamFile(inputBamFile, outputDir, "_trimmed_dupmark.bam");
         this.coverageBed = getOutXBamFile(inputBamFile, outputDir, "_coverage.bed");
         this.logFile = getOutXBamFile(inputBamFile, outputDir, "_log.txt");
+        this.isTrim = isTrim;
+        
+    }
+    
+    public InputData(File inputBamFile, File outputDir, boolean isTrim, String stat) {
+        
+        this.inputBamFile = inputBamFile;
+        this.outputDir = outputDir;
+        
+        // useless variable
+        this.outputFilteredBamFile = getOutXBamFile(inputBamFile, outputDir, "_filtered.bam");
+        
+        this.duplicateMarkedBamFile = inputBamFile;
+        this.coverageBed = getOutXBamFile(inputBamFile, outputDir, "_coverage.bed");
+        this.logFile = getOutXBamFile(inputBamFile, outputDir, "_log.txt");
+        this.isTrim = isTrim;
         
     }
         
@@ -94,5 +111,16 @@ public class InputData {
     public File getCoverageBed() {
         return coverageBed;
     }
+
+    public void setIsTrim(boolean isTrim) {
+        this.isTrim = isTrim;
+    }
+
+    public boolean isIsTrim() {
+        return isTrim;
+    }
+
+   
+    
     
 }

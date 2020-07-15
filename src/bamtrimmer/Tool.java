@@ -15,6 +15,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Pattern;
     
 /**
  *
@@ -200,6 +201,20 @@ public class Tool {
             return false;
         }
          return true;
+    }
+    
+    private String getChrFormat(String bamRecord){
+        
+        String[] alignmentRecord =  bamRecord.split("\t");
+        Pattern chr_ChrX = Pattern.compile("Chr");
+        Pattern chr_chrX = Pattern.compile("chr");
+        Pattern chr_X = Pattern.compile("\\d+");
+        
+       if(chr_ChrX.matcher(alignmentRecord[1]).find()){
+           
+       }
+        return "chr";
+        
     }
     
 }

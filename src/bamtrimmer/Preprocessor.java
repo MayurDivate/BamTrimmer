@@ -26,14 +26,30 @@ public class Preprocessor {
          
          // get the Tool object 
          Tool tool = new Tool(packageDir, inputData);
+         
          if(this.setOutputFrameVisible()){
              OutputFrame.OUTPUTFOLDER = inputData.getOutputDir();
              JOptionPane.showMessageDialog(OutputFrame.outputframe, "Processing wait");
-             boolean isSuccess = this.preprocessBam(tool);
-             if(isSuccess){
-                inputData.getLogFile().getAbsoluteFile();
-            }
+             
+             // what to run 
+             if(inputData.isIsTrim()){
+                boolean isSuccess = this.preprocessBam(tool);
+                if(isSuccess){
+                    inputData.getLogFile().getAbsoluteFile();
+                }
+             }
+             
+             else{
+                boolean isSuccess = this.getBamStat(tool);
+                if(isSuccess){
+                    inputData.getLogFile().getAbsoluteFile();
+                }
+             }
+             
          }
+         
+         
+         
          
     }
     
@@ -56,7 +72,7 @@ public class Preprocessor {
             flag = tool.runJar(tool.getMarkDuplicateCommand(), "Mark Duplictes");
          }
          else{
-             OutputFrame.outputframe.setLog("ERROR : Filte Sam Reads Failed, check log file for more details.");
+             OutputFrame.outputframe.setLog("ERROR : Filter Sam Reads Failed, check log file for more details.");
              return false;
          }
          
@@ -86,5 +102,33 @@ public class Preprocessor {
              return false;
          }
     }
+    
+    private boolean getBamStat(Tool tool){
+         boolean flag = false;
+         
+         // create index
+        
+        flag = tool.runJar(tool.getBamIndexCommand(), "Bam Index");
+         
+        if(flag){
+            flag = tool.runJar(tool.getCoverageBedCommand(), "Coverage Bed");
+        }
+        else{
+             OutputFrame.outputframe.setLog("ERROR : Bam indexing Failed, check log file for more details.");
+             return false;
+        }
+         
+        if(flag){
+             System.out.println(" ---- Done --- )");
+             OutputFrame.outputframe.setLog("BAM file processing finished!");
+             return true;
+        }
+        else{
+             OutputFrame.outputframe.setLog("ERROR : Coverage bed failed, check log file for more details.");
+             return false;
+        }
+         
+    }
+    
     
 }
