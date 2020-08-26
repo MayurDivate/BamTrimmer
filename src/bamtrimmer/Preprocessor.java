@@ -66,7 +66,6 @@ public class Preprocessor {
          
          // Filter Sam Reads
             flag = tool.runJar(tool.getFilterSamReadsCommand(), "Filter Sam Reads");
-         
         // Mark Duplicates 
          if(flag){
             flag = tool.runJar(tool.getMarkDuplicateCommand(), "Mark Duplictes");
