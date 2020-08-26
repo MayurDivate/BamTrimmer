@@ -62,12 +62,12 @@ public class InputFrame extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Bam Trimmer");
         setLocation(new java.awt.Point(0, 0));
-        setPreferredSize(new java.awt.Dimension(600, 335));
+        setPreferredSize(new java.awt.Dimension(600, 350));
         setResizable(false);
 
         jPanelMain.setBackground(new java.awt.Color(255, 51, 51));
         jPanelMain.setForeground(new java.awt.Color(255, 0, 0));
-        jPanelMain.setPreferredSize(new java.awt.Dimension(600, 400));
+        jPanelMain.setPreferredSize(new java.awt.Dimension(600, 290));
 
         jPanelTool.setForeground(new java.awt.Color(255, 0, 51));
         jPanelTool.setPreferredSize(new java.awt.Dimension(600, 249));
@@ -295,7 +295,7 @@ public class InputFrame extends javax.swing.JFrame {
                 .addComponent(jPanelTitle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanelTool, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(29, Short.MAX_VALUE))
+                .addGap(10, 10, 10))
         );
 
         jMenu1.setText("Help");
@@ -325,8 +325,8 @@ public class InputFrame extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanelMain, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jPanelMain, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
