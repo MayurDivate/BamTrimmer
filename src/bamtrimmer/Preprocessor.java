@@ -56,10 +56,19 @@ public class Preprocessor {
 
     private boolean preprocessBam(Tool tool) {
         boolean flag = false;
-        // Filter Sam Reads
-        flag = tool.runJar(tool.getFilterSamReadsCommand(), "Filter Sam Reads");
-        // Mark Duplicates 
+        
+        // FixMateInformation
+        flag = tool.runJar(tool.getFixMateInformationCommand(), "Filter Sam Reads");
+        
+        if(flag){
+            // Filter Sam Reads
+             flag = tool.runJar(tool.getFilterSamReadsCommand(), "Filter Sam Reads");
+        }
+         // Mark Duplicates 
         if (flag) {
+            // delete fxmatebam
+            tool.getInputData().getOutFxmateBamFile().delete();
+            
             flag = tool.runJar(tool.getMarkDuplicateCommand(), "Mark Duplictes");
         } else {
             OutputFrame.outputframe.setLog("ERROR : Filter Sam Reads Failed, check log file for more details.");
@@ -67,6 +76,9 @@ public class Preprocessor {
         }
 
         if (flag) {
+            // delete filtered bam
+            tool.getInputData().getFilteredBamFile().delete();
+            
             flag = tool.runJar(tool.getBamIndexCommand(), "Bam Index");
         } else {
             OutputFrame.outputframe.setLog("ERROR : Mark Duplicates Failed, check log file for more details.");

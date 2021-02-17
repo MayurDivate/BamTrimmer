@@ -15,6 +15,7 @@ public class InputData {
     
     private File inputBamFile;
     private File outputDir;
+    private File outFxmateBamFile;
     private File outputFilteredBamFile;
     private File duplicateMarkedBamFile;
     private File logFile;
@@ -24,6 +25,7 @@ public class InputData {
     public InputData(File inputBamFile, File outputDir, boolean isTrim) {
         this.inputBamFile = inputBamFile;
         this.outputDir = outputDir;
+        this.outFxmateBamFile = getOutXBamFile(inputBamFile, outputDir, "_Fxmate.bam");
         this.outputFilteredBamFile = getOutXBamFile(inputBamFile, outputDir, "_filtered.bam");
         this.duplicateMarkedBamFile = getOutXBamFile(inputBamFile, outputDir, "_trimmed_dupmark.bam");
         this.coverageBed = getOutXBamFile(inputBamFile, outputDir, "_coverage.bed");
@@ -58,6 +60,7 @@ public class InputData {
         String input_data = "Input Data\n";
         input_data = input_data + "input bam: "+ this.getInputBamFile().getAbsolutePath()+ "\n";
         input_data = input_data + "trimmed bam: "+ this.getDuplicateMarkedBamFile().getAbsolutePath()+ "\n";
+        input_data = input_data + "Fix mate info bam: "+ this.getOutFxmateBamFile().getAbsolutePath()+ "\n";
         input_data = input_data + "output folder: "+ this.getOutputDir().getAbsolutePath()+ "\n";
         input_data = input_data + "trimmed bam: "+ this.getFilteredBamFile().getAbsolutePath()+ "\n";
         input_data = input_data + " --- --- --- "+ "\n";
@@ -120,7 +123,11 @@ public class InputData {
         return isTrim;
     }
 
-   
+    public File getOutFxmateBamFile() {
+        return outFxmateBamFile;
+    }
+
+    
     
     
 }

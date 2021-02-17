@@ -38,6 +38,22 @@ public class Tool {
     public File getPackagePath() {
         return packagePath;
     }
+    
+    String[] getFixMateInformationCommand() {
+        
+        String[] command = {
+            "java",
+            "-jar",
+            this.getPackagePath().getAbsolutePath() + File.separator + "lib" + File.separator + "picard.jar",
+            "FixMateInformation",
+            "I=" + this.inputData.getInputBamFile().getAbsolutePath(),
+            "O=" + this.inputData.getOutFxmateBamFile().getAbsolutePath(),
+            "USE_JDK_DEFLATER=true", "USE_JDK_INFLATER=true"
+        };
+        
+        return command;
+    }
+
 
     String[] getFilterSamReadsCommand() {
         
@@ -46,7 +62,7 @@ public class Tool {
             "-jar",
             this.getPackagePath().getAbsolutePath() + File.separator + "lib" + File.separator + "picard.jar",
             "FilterSamReads",
-            "I=" + this.inputData.getInputBamFile().getAbsolutePath(),
+            "I=" + this.inputData.getOutFxmateBamFile().getAbsolutePath(),
             "O=" + this.inputData.getFilteredBamFile().getAbsolutePath(),
             "Filter=includePairedIntervals",
             "INTERVAL_LIST=" + this.packagePath.getAbsolutePath() + File.separator + ".." + File.separator + "BGG.bed",
