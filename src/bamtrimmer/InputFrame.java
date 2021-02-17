@@ -22,7 +22,7 @@ public class InputFrame extends javax.swing.JFrame {
     private static boolean isBamFile = false;
     private static boolean isOutputFolder = false;
     public static InputFrame mainframe;
-
+    public File browsedir = new File(System.getProperty("user.home"));
     public InputFrame() {
         initComponents();
     }
@@ -333,7 +333,7 @@ public class InputFrame extends javax.swing.JFrame {
 
     private void jButtonOutputFolderBrowserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonOutputFolderBrowserActionPerformed
         // TODO add your handling code here:
-        JFileChooser outputFolderChooser = new JFileChooser();
+        JFileChooser outputFolderChooser = new JFileChooser(browsedir);
         outputFolderChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 
         outputFolderChooser.setDialogTitle("Select output folder");
@@ -342,6 +342,7 @@ public class InputFrame extends javax.swing.JFrame {
         if (retrunVal == JFileChooser.APPROVE_OPTION) {
             File outputFolder = outputFolderChooser.getSelectedFile();
             jTextFieldOutputFolder.setText(outputFolder.getAbsolutePath());
+            browsedir = outputFolder;
             isOutputFolder = true;
             jTextFieldOutputFolder.setForeground(Color.black);
         }
@@ -350,7 +351,7 @@ public class InputFrame extends javax.swing.JFrame {
 
     private void jButtonBamFileBrowserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBamFileBrowserActionPerformed
         // TODO add your handling code here:
-        JFileChooser bamFileChooser = new JFileChooser();
+        JFileChooser bamFileChooser = new JFileChooser(browsedir);
         bamFileChooser.setAcceptAllFileFilterUsed(false);
         bamFileChooser.addChoosableFileFilter(getFileNameExtensionFilter());
         bamFileChooser.setDialogTitle("Select input bam file");
@@ -359,6 +360,7 @@ public class InputFrame extends javax.swing.JFrame {
         if (retrunVal == JFileChooser.APPROVE_OPTION) {
             File inputBam = bamFileChooser.getSelectedFile();
             jTextFieldInputBam.setText(inputBam.getAbsolutePath());
+            browsedir = inputBam.getParentFile();
             isBamFile = true;
             jTextFieldInputBam.setForeground(Color.black);
         }
