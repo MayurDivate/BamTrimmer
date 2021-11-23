@@ -16,20 +16,25 @@ public class Preprocessor {
 
     public void runBamTrimming(InputData inputData) {
 
-        
         File packageDir = BamTrimmer.getPackageBase();
         inputData.getLogFile().delete();
+        
+        System.out.println("bamtrimmer.Preprocessor.runBamTrimming()");
+        System.out.println(inputData);
+        System.exit(0);
 
         // get the Tool object 
         Tool tool = new Tool(packageDir, inputData);
 
         if (this.setOutputFrameVisible()) {
             OutputFrame.OUTPUTFOLDER = inputData.getOutputDir();
-            JOptionPane.showMessageDialog(OutputFrame.outputframe, "Please Click OK to proceed!");
+            JOptionPane.showMessageDialog(OutputFrame.outputframe, "Please click OK to proceed!");
+            
+            
 
             // what to run 
             if (inputData.isIsTrim()) {
-                System.out.println("Trimming Bam File ... ");
+                System.out.println("Trimming Bam File...");
                 boolean isSuccess = this.preprocessBam(tool);
                 if (isSuccess) {
                     inputData.getLogFile().getAbsoluteFile();

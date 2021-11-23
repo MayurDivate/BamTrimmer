@@ -21,6 +21,8 @@ public class InputFrame extends javax.swing.JFrame {
      */
     private static boolean isBamFile = false;
     private static boolean isOutputFolder = false;
+    private static boolean isRhFile = false;
+    
     public static InputFrame mainframe;
     public File browsedir = new File(System.getProperty("user.home"));
     public InputFrame() {
@@ -52,13 +54,13 @@ public class InputFrame extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         trim = new javax.swing.JRadioButton();
         stat = new javax.swing.JRadioButton();
-        jPanel1 = new javax.swing.JPanel();
-        jTextFieldInputBam1 = new javax.swing.JTextField();
-        jButtonBamFileBrowser1 = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
-        jCheckBox1 = new javax.swing.JCheckBox();
+        jPanelRHcoordinates = new javax.swing.JPanel();
+        jTextFieldInputCordinateFile = new javax.swing.JTextField();
+        jButtonCoordinateFileBrowser = new javax.swing.JButton();
+        jLabelSeqType = new javax.swing.JLabel();
+        jRadioButtonWGS = new javax.swing.JRadioButton();
+        jRadioButtonWES = new javax.swing.JRadioButton();
+        jCheckBoxDefaultCordinates = new javax.swing.JCheckBox();
         jPanelTitle = new javax.swing.JPanel();
         jLabelHeader = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
@@ -68,7 +70,7 @@ public class InputFrame extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Bam Trimmer");
         setLocation(new java.awt.Point(0, 0));
-        setPreferredSize(new java.awt.Dimension(620, 480));
+        setPreferredSize(new java.awt.Dimension(620, 460));
         setResizable(false);
 
         jPanelMain.setBackground(new java.awt.Color(255, 51, 51));
@@ -101,11 +103,11 @@ public class InputFrame extends javax.swing.JFrame {
         jPanelRunLayout.setHorizontalGroup(
             jPanelRunLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelRunLayout.createSequentialGroup()
-                .addGap(100, 100, 100)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButtonReset, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(120, 120, 120)
                 .addComponent(jButtonRun, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(100, 100, 100))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanelRunLayout.setVerticalGroup(
             jPanelRunLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -232,82 +234,84 @@ public class InputFrame extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("RH coordinates"));
+        jPanelRHcoordinates.setBorder(javax.swing.BorderFactory.createTitledBorder("RH coordinates"));
 
-        jTextFieldInputBam1.setEditable(false);
-        jTextFieldInputBam1.setText("/path/RHCE.txt");
-        jTextFieldInputBam1.addActionListener(new java.awt.event.ActionListener() {
+        jTextFieldInputCordinateFile.setEditable(false);
+        jTextFieldInputCordinateFile.setText("/path/RH_coordiantes.txt");
+        jTextFieldInputCordinateFile.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextFieldInputBam1ActionPerformed(evt);
+                jTextFieldInputCordinateFileActionPerformed(evt);
             }
         });
 
-        jButtonBamFileBrowser1.setText("Browse");
-        jButtonBamFileBrowser1.setPreferredSize(new java.awt.Dimension(30, 25));
-        jButtonBamFileBrowser1.addActionListener(new java.awt.event.ActionListener() {
+        jButtonCoordinateFileBrowser.setText("Browse");
+        jButtonCoordinateFileBrowser.setPreferredSize(new java.awt.Dimension(30, 25));
+        jButtonCoordinateFileBrowser.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonBamFileBrowser1ActionPerformed(evt);
+                jButtonCoordinateFileBrowserActionPerformed(evt);
             }
         });
 
-        jLabel2.setText("Sequencing type");
+        jLabelSeqType.setText("Sequencing type");
 
-        jRadioButton1.setText("WGS");
-        jRadioButton1.addActionListener(new java.awt.event.ActionListener() {
+        jRadioButtonWGS.setSelected(true);
+        jRadioButtonWGS.setText("WGS");
+        jRadioButtonWGS.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButton1ActionPerformed(evt);
+                jRadioButtonWGSActionPerformed(evt);
             }
         });
 
-        jRadioButton2.setText("WES");
-        jRadioButton2.addActionListener(new java.awt.event.ActionListener() {
+        jRadioButtonWES.setText("WES");
+        jRadioButtonWES.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButton2ActionPerformed(evt);
+                jRadioButtonWESActionPerformed(evt);
             }
         });
 
-        jCheckBox1.setText("Default coordiantes");
-        jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
+        jCheckBoxDefaultCordinates.setText("Default coordiantes");
+        jCheckBoxDefaultCordinates.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBox1ActionPerformed(evt);
+                jCheckBoxDefaultCordinatesActionPerformed(evt);
             }
         });
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(15, 15, 15)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jCheckBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
+        javax.swing.GroupLayout jPanelRHcoordinatesLayout = new javax.swing.GroupLayout(jPanelRHcoordinates);
+        jPanelRHcoordinates.setLayout(jPanelRHcoordinatesLayout);
+        jPanelRHcoordinatesLayout.setHorizontalGroup(
+            jPanelRHcoordinatesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelRHcoordinatesLayout.createSequentialGroup()
+                .addGap(13, 13, 13)
+                .addGroup(jPanelRHcoordinatesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jCheckBoxDefaultCordinates, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelSeqType, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jRadioButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanelRHcoordinatesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelRHcoordinatesLayout.createSequentialGroup()
+                        .addComponent(jRadioButtonWGS, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(35, 35, 35)
-                        .addComponent(jRadioButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jTextFieldInputBam1, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jRadioButtonWES, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanelRHcoordinatesLayout.createSequentialGroup()
+                        .addComponent(jTextFieldInputCordinateFile, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButtonBamFileBrowser1, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jButtonCoordinateFileBrowser, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        jPanelRHcoordinatesLayout.setVerticalGroup(
+            jPanelRHcoordinatesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelRHcoordinatesLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jRadioButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jRadioButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(10, 10, 10)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jCheckBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextFieldInputBam1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonBamFileBrowser1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(13, 13, 13))
+                .addGroup(jPanelRHcoordinatesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabelSeqType, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanelRHcoordinatesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jRadioButtonWES, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jRadioButtonWGS, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(5, 5, 5)
+                .addGroup(jPanelRHcoordinatesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jCheckBoxDefaultCordinates, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldInputCordinateFile, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonCoordinateFileBrowser, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(5, 5, 5))
         );
 
         javax.swing.GroupLayout jPanelToolLayout = new javax.swing.GroupLayout(jPanelTool);
@@ -315,15 +319,12 @@ public class InputFrame extends javax.swing.JFrame {
         jPanelToolLayout.setHorizontalGroup(
             jPanelToolLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelToolLayout.createSequentialGroup()
+                .addGap(5, 5, 5)
                 .addGroup(jPanelToolLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanelToolLayout.createSequentialGroup()
-                        .addGap(5, 5, 5)
-                        .addGroup(jPanelToolLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 590, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jPanelInput, javax.swing.GroupLayout.PREFERRED_SIZE, 590, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanelToolLayout.createSequentialGroup()
-                        .addGap(5, 5, 5)
-                        .addComponent(jPanelSelect, javax.swing.GroupLayout.PREFERRED_SIZE, 590, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanelToolLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(jPanelRHcoordinates, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jPanelInput, javax.swing.GroupLayout.PREFERRED_SIZE, 590, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPanelSelect, javax.swing.GroupLayout.PREFERRED_SIZE, 590, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelToolLayout.createSequentialGroup()
                 .addContainerGap()
@@ -338,7 +339,7 @@ public class InputFrame extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanelInput, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(5, 5, 5)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanelRHcoordinates, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(5, 5, 5)
                 .addComponent(jPanelRun, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(5, 5, 5))
@@ -387,8 +388,8 @@ public class InputFrame extends javax.swing.JFrame {
                 .addGap(5, 5, 5)
                 .addComponent(jPanelTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(5, 5, 5)
-                .addComponent(jPanelTool, javax.swing.GroupLayout.PREFERRED_SIZE, 348, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(5, 5, 5))
+                .addComponent(jPanelTool, javax.swing.GroupLayout.PREFERRED_SIZE, 335, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jMenuBar1.setMaximumSize(new java.awt.Dimension(100, 32768));
@@ -421,8 +422,8 @@ public class InputFrame extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanelMain, javax.swing.GroupLayout.PREFERRED_SIZE, 405, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(19, Short.MAX_VALUE))
+                .addComponent(jPanelMain, javax.swing.GroupLayout.PREFERRED_SIZE, 391, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -470,43 +471,45 @@ public class InputFrame extends javax.swing.JFrame {
     }
 
     private void jButtonRunActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRunActionPerformed
-        // TODO add your handling code here:
 
         boolean flag = false;
-        if (isBamFile && isOutputFolder) {
+        if ( (isBamFile && isOutputFolder) && validateRhInputs())  {
             flag = true;
         }
 
         if (flag) {
-                    InputFrame.mainframe.dispose();
-                    jButtonRun.setEnabled(false);
-                    new Preprocessor().runBamTrimming(this.getInputdata());
-                
-        } else {
+                InputFrame.mainframe.dispose();
+                jButtonRun.setEnabled(false);
+                new Preprocessor().runBamTrimming(this.getInputdata());
+        } 
+        else {
             if (!isBamFile) {
                 jTextFieldInputBam.setForeground(Color.red);
             }
             if (!isOutputFolder) {
                 jTextFieldOutputFolder.setForeground(Color.red);
-            }
+             }
         }
-
     }//GEN-LAST:event_jButtonRunActionPerformed
 
-    
+    private boolean validateRhInputs() {
+        boolean rh = false;
+        if(jCheckBoxDefaultCordinates.isSelected() == false && isRhFile){
+            return true;
+        }
+        return false;
+    }
     
     private InputData getInputdata(){
          File inputBam = new File(jTextFieldInputBam.getText());
          File outputFolder = new File(jTextFieldOutputFolder.getText());
+         File rhFile = new File(jTextFieldInputCordinateFile.getText());
         
             if(!trim.isSelected()){
-                 return new InputData(inputBam, outputFolder, trim.isSelected(), "run stat" );
+                 return new InputData(inputBam, outputFolder, trim.isSelected(), "run stat", jRadioButtonWGS.isSelected(), rhFile);
             }
          
-         return new InputData(inputBam, outputFolder, trim.isSelected());
-         
-         
-         
+        return new InputData(inputBam, outputFolder, trim.isSelected(), jRadioButtonWGS.isSelected(), rhFile);
     }
     
     private void jButtonResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonResetActionPerformed
@@ -533,6 +536,9 @@ public class InputFrame extends javax.swing.JFrame {
         if(trim.isSelected()){
             stat.setSelected(false);
         }
+        else{
+            stat.setSelected(true);
+        }
     }//GEN-LAST:event_trimActionPerformed
 
     private void statActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_statActionPerformed
@@ -540,27 +546,61 @@ public class InputFrame extends javax.swing.JFrame {
          if(stat.isSelected()){
             trim.setSelected(false);
         }
+         else{
+             trim.setSelected(true);
+         }
     }//GEN-LAST:event_statActionPerformed
 
-    private void jButtonBamFileBrowser1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBamFileBrowser1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButtonBamFileBrowser1ActionPerformed
+    private void jButtonCoordinateFileBrowserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCoordinateFileBrowserActionPerformed
+        JFileChooser rhFileChooser = new JFileChooser(browsedir);
+        rhFileChooser.setDialogTitle("Select RH coordinates file");
 
-    private void jTextFieldInputBam1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldInputBam1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextFieldInputBam1ActionPerformed
+        int retrunVal = rhFileChooser.showOpenDialog(null);
+        if (retrunVal == JFileChooser.APPROVE_OPTION) {
+            File rhFile = rhFileChooser.getSelectedFile();
+            jTextFieldInputCordinateFile.setText(rhFile.getAbsolutePath());
+            browsedir = rhFile.getParentFile();
+            isRhFile = true;
+            jTextFieldInputBam.setForeground(Color.black);
+        }
+    }//GEN-LAST:event_jButtonCoordinateFileBrowserActionPerformed
 
-    private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton1ActionPerformed
+    private void jTextFieldInputCordinateFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldInputCordinateFileActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jRadioButton1ActionPerformed
+    }//GEN-LAST:event_jTextFieldInputCordinateFileActionPerformed
 
-    private void jRadioButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jRadioButton2ActionPerformed
+    private void jRadioButtonWGSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonWGSActionPerformed
+        
+        if(jRadioButtonWGS.isSelected()){
+            jRadioButtonWES.setSelected(false);
+        }
+        else{
+            jRadioButtonWES.setSelected(true);
+        }
+        
+    }//GEN-LAST:event_jRadioButtonWGSActionPerformed
 
-    private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jCheckBox1ActionPerformed
+    private void jRadioButtonWESActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonWESActionPerformed
+
+        if(jRadioButtonWES.isSelected()){
+            jRadioButtonWGS.setSelected(false);
+        }
+        else{
+            jRadioButtonWGS.setSelected(true);
+        }
+    }//GEN-LAST:event_jRadioButtonWESActionPerformed
+
+    private void jCheckBoxDefaultCordinatesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxDefaultCordinatesActionPerformed
+        if(jCheckBoxDefaultCordinates.isSelected()){
+            jButtonCoordinateFileBrowser.setEnabled(false);
+            jTextFieldInputCordinateFile.setText("default cordinate file");
+            
+        }
+        else{
+            jButtonCoordinateFileBrowser.setEnabled(true);
+            jTextFieldInputCordinateFile.setText("/path/RH_coordinate_file.txt");
+        }
+    }//GEN-LAST:event_jCheckBoxDefaultCordinatesActionPerformed
 
     /**
      * @param args the command line arguments
@@ -602,30 +642,30 @@ public class InputFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonBamFileBrowser;
-    private javax.swing.JButton jButtonBamFileBrowser1;
+    private javax.swing.JButton jButtonCoordinateFileBrowser;
     private javax.swing.JButton jButtonOutputFolderBrowser;
     private javax.swing.JButton jButtonReset;
     private javax.swing.JButton jButtonRun;
-    private javax.swing.JCheckBox jCheckBox1;
+    private javax.swing.JCheckBox jCheckBoxDefaultCordinates;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabelBamfile;
     private javax.swing.JLabel jLabelHeader;
     private javax.swing.JLabel jLabelOutputFolder;
+    private javax.swing.JLabel jLabelSeqType;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanelInput;
     private javax.swing.JPanel jPanelMain;
+    private javax.swing.JPanel jPanelRHcoordinates;
     private javax.swing.JPanel jPanelRun;
     private javax.swing.JPanel jPanelSelect;
     private javax.swing.JPanel jPanelTitle;
     private javax.swing.JPanel jPanelTool;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
+    private javax.swing.JRadioButton jRadioButtonWES;
+    private javax.swing.JRadioButton jRadioButtonWGS;
     private javax.swing.JTextField jTextFieldInputBam;
-    private javax.swing.JTextField jTextFieldInputBam1;
+    private javax.swing.JTextField jTextFieldInputCordinateFile;
     private javax.swing.JTextField jTextFieldOutputFolder;
     private javax.swing.JRadioButton stat;
     private javax.swing.JRadioButton trim;

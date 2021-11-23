@@ -22,7 +22,10 @@ public class InputData {
     private File coverageBed;
     private boolean isTrim; 
     
-    public InputData(File inputBamFile, File outputDir, boolean isTrim) {
+    private boolean isWGS;
+    private File rhFile;
+    
+    public InputData(File inputBamFile, File outputDir, boolean isTrim, boolean isWGS, File rhFile ) {
         this.inputBamFile = inputBamFile;
         this.outputDir = outputDir;
         this.outFxmateBamFile = getOutXBamFile(inputBamFile, outputDir, "_Fxmate.bam");
@@ -32,9 +35,12 @@ public class InputData {
         this.logFile = getOutXBamFile(inputBamFile, outputDir, "_log.txt");
         this.isTrim = isTrim;
         
+        this.isWGS = isWGS;
+        this.rhFile = rhFile;
+        
     }
     
-    public InputData(File inputBamFile, File outputDir, boolean isTrim, String stat) {
+    public InputData(File inputBamFile, File outputDir, boolean isTrim, String stat, boolean isWGS, File rhFile) {
         
         this.inputBamFile = inputBamFile;
         this.outputDir = outputDir;
@@ -46,6 +52,9 @@ public class InputData {
         this.coverageBed = getOutXBamFile(inputBamFile, outputDir, "_coverage.bed");
         this.logFile = getOutXBamFile(inputBamFile, outputDir, "_log.txt");
         this.isTrim = isTrim;
+        
+        this.isWGS = false;
+        this.rhFile = rhFile;
         
     }
         
@@ -63,6 +72,11 @@ public class InputData {
         input_data = input_data + "Fix mate info bam: "+ this.getOutFxmateBamFile().getAbsolutePath()+ "\n";
         input_data = input_data + "output folder: "+ this.getOutputDir().getAbsolutePath()+ "\n";
         input_data = input_data + "trimmed bam: "+ this.getFilteredBamFile().getAbsolutePath()+ "\n";
+        
+        input_data = input_data + "RH co-ordinate file: "+ this.getRhFile().getAbsolutePath()+ "\n";
+        input_data = input_data + "Is data type WGS: "+ this.isIsWGS()+ "\n";
+        
+        
         input_data = input_data + " --- --- --- "+ "\n";
         
         return input_data; //To change body of generated methods, choose Tools | Templates.
@@ -127,6 +141,14 @@ public class InputData {
         return outFxmateBamFile;
     }
 
+    public File getRhFile() {
+        return rhFile;
+    }
+
+    public boolean isIsWGS() {
+        return isWGS;
+    }
+    
     
     
     
