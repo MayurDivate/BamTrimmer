@@ -188,26 +188,46 @@ public class Preprocessor {
     
         boolean flag = true;
 
-        File exon2 = new File(tool.getInputData().getOutputDir().getAbsolutePath() + File.separator + "RHCE_exon2_coverage.bed");
-        File rhce = new File(tool.getInputData().getOutputDir().getAbsolutePath() + File.separator + "RHCE_coverage.bed");
-        File rhd = new File(tool.getInputData().getOutputDir().getAbsolutePath() + File.separator + "RHD_coverage.bed");
+        File exon2CovFile = new File(tool.getInputData().getOutputDir().getAbsolutePath() + File.separator + "RHCE_exon2_coverage.bed");
+        File rhceCovFile = new File(tool.getInputData().getOutputDir().getAbsolutePath() + File.separator + "RHCE_coverage.bed");
+        File rhdCovFile = new File(tool.getInputData().getOutputDir().getAbsolutePath() + File.separator + "RHD_coverage.bed");
 
-        float avgCovRHD = this.getAverageCoverage(rhd);
+        float avgCovRHD = this.getAverageCoverage(rhdCovFile);
         System.out.println("RHD " + avgCovRHD);
         // RHD CHR1 : 25597897 - 25655628
         flag = this.replaceCoverage(tool.getInputData().getCoverageBed(), "chr1", "25597897", "25655628", avgCovRHD);
+        
         if (flag) {
-            float avgCovRHCE = this.getAverageCoverage(rhce);
+            float avgCovRHCE = this.getAverageCoverage(rhceCovFile);
             System.out.println("RHCE " + avgCovRHCE);
             // RHCE CHR1 : 25688926 - 25747405
             flag = this.replaceCoverage(tool.getInputData().getCoverageBed(), "chr1", "25688926", "25747405", avgCovRHCE);
         }
         if (flag) {
-            float avgCovRHCEexon2 = this.getAverageCoverage(exon2);
+            float avgCovRHCEexon2 = this.getAverageCoverage(exon2CovFile);
             System.out.println("RHCE Exon " + avgCovRHCEexon2);
             // RHCE EXON2 chr1 : 25735173 - 25735360
             flag = this.replaceCoverage(tool.getInputData().getCoverageBed(), "chr1", "25735173", "25735360", avgCovRHCEexon2);
         }
+        
+        // delte files
+        System.out.println("Deleting files");
+        
+        File[] files = new File[6];
+        files[0] = tool.getInputData().getRhdFile();
+        files[1] = tool.getInputData().getRhceFile();
+        files[2] = tool.getInputData().getRhceExon2File();
+        files[3] = rhdCovFile;
+        files[4] = rhceCovFile;
+        files[5] = exon2CovFile;
+        
+        
+        for(File fx: files){
+            if(fx.exists()){
+                fx.delete();
+            }
+        }
+        
         return flag;
     }
     
