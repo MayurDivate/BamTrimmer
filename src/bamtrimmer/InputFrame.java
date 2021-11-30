@@ -558,7 +558,7 @@ public class InputFrame extends javax.swing.JFrame {
         }
         else{
             
-            return new File(jTextFieldOutputFolder.getText() + File.separator + locID +"_user.bed");
+            return new File(jTextFieldOutputFolder.getText() + File.separator + locID +".bed");
         }
     }
     

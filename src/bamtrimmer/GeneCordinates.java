@@ -42,7 +42,7 @@ public class GeneCordinates {
             String line = br.readLine();
             while (line != null) {
                 String out = line.split("\t", 2)[0];
-                File outputfile = new File(outputFolder.getAbsoluteFile() + File.separator + out + "_user.bed");
+                File outputfile = new File(outputFolder.getAbsoluteFile() + File.separator + out + ".bed");
                 createUserGeneCordinateBed(line, outputfile);
                 line = br.readLine();
             }
