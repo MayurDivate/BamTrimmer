@@ -23,9 +23,11 @@ public class InputData {
     private boolean isTrim; 
     
     private boolean isWGS;
-    private File rhFile;
+    private File rhdFile;
+    private File rhceFile;
+    private File rhceExon2File;
     
-    public InputData(File inputBamFile, File outputDir, boolean isTrim, boolean isWGS, File rhFile ) {
+    public InputData(File inputBamFile, File outputDir, boolean isTrim ) {
         this.inputBamFile = inputBamFile;
         this.outputDir = outputDir;
         this.outFxmateBamFile = getOutXBamFile(inputBamFile, outputDir, "_Fxmate.bam");
@@ -35,12 +37,9 @@ public class InputData {
         this.logFile = getOutXBamFile(inputBamFile, outputDir, "_log.txt");
         this.isTrim = isTrim;
         
-        this.isWGS = isWGS;
-        this.rhFile = rhFile;
-        
     }
     
-    public InputData(File inputBamFile, File outputDir, boolean isTrim, String stat, boolean isWGS, File rhFile) {
+    public InputData(File inputBamFile, File outputDir, boolean isTrim, boolean isWGS, File rhdFile, File rhceFile, File rhceExon2File) {
         
         this.inputBamFile = inputBamFile;
         this.outputDir = outputDir;
@@ -52,9 +51,14 @@ public class InputData {
         this.coverageBed = getOutXBamFile(inputBamFile, outputDir, "_coverage.bed");
         this.logFile = getOutXBamFile(inputBamFile, outputDir, "_log.txt");
         this.isTrim = isTrim;
-        
         this.isWGS = false;
-        this.rhFile = rhFile;
+        
+        this.isWGS = isWGS;
+        this.rhdFile = rhdFile;
+        this.rhceFile = rhceFile;
+        this.rhceExon2File = rhceExon2File;
+        
+   
         
     }
         
@@ -73,9 +77,11 @@ public class InputData {
         input_data = input_data + "output folder: "+ this.getOutputDir().getAbsolutePath()+ "\n";
         input_data = input_data + "trimmed bam: "+ this.getFilteredBamFile().getAbsolutePath()+ "\n";
         
-        input_data = input_data + "RH co-ordinate file: "+ this.getRhFile().getAbsolutePath()+ "\n";
-        input_data = input_data + "Is data type WGS: "+ this.isIsWGS()+ "\n";
         
+        input_data = input_data + "Is data type WGS: "+ this.isIsWGS()+ "\n";
+        input_data = input_data + "RHD co-ordinate file: "+ this.getRhdFile().getAbsolutePath()+ "\n";
+        input_data = input_data + "RHCE co-ordinate file: "+ this.getRhceFile().getAbsolutePath()+ "\n";
+        input_data = input_data + "RHCE Exon2 co-ordinate file: "+ this.getRhceExon2File().getAbsolutePath()+ "\n";
         
         input_data = input_data + " --- --- --- "+ "\n";
         
@@ -141,15 +147,20 @@ public class InputData {
         return outFxmateBamFile;
     }
 
-    public File getRhFile() {
-        return rhFile;
-    }
-
     public boolean isIsWGS() {
         return isWGS;
     }
-    
-    
-    
-    
+
+    public File getRhceExon2File() {
+        return rhceExon2File;
+    }
+
+    public File getRhceFile() {
+        return rhceFile;
+    }
+
+    public File getRhdFile() {
+        return rhdFile;
+    }
+        
 }

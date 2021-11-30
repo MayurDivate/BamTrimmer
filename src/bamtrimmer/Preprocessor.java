@@ -14,15 +14,14 @@ import javax.swing.JOptionPane;
  */
 public class Preprocessor {
 
-    public void runBamTrimming(InputData inputData) {
-
-        File packageDir = BamTrimmer.getPackageBase();
-        inputData.getLogFile().delete();
+    public void run(InputData inputData) {
+        System.out.println("* --- -- RUN -- --- *");
         
-        System.out.println("bamtrimmer.Preprocessor.runBamTrimming()");
-        System.out.println(inputData);
-        System.exit(0);
-
+        File packageDir = BamTrimmer.getPackageBase();
+        if(inputData.getLogFile().exists()){
+            inputData.getLogFile().delete();
+        }
+        
         // get the Tool object 
         Tool tool = new Tool(packageDir, inputData);
 
@@ -30,8 +29,6 @@ public class Preprocessor {
             OutputFrame.OUTPUTFOLDER = inputData.getOutputDir();
             JOptionPane.showMessageDialog(OutputFrame.outputframe, "Please click OK to proceed!");
             
-            
-
             // what to run 
             if (inputData.isIsTrim()) {
                 System.out.println("Trimming Bam File...");
@@ -63,7 +60,7 @@ public class Preprocessor {
         boolean flag = false;
         
         // FixMateInformation
-        flag = tool.runJar(tool.getFixMateInformationCommand(), "Filter Sam Reads");
+        flag = tool.runJar(tool.getFixMateInformationCommand(), "Fix mate pair information");
         
         if(flag){
             // Filter Sam Reads
@@ -113,20 +110,56 @@ public class Preprocessor {
 
         // create index
         flag = tool.runJar(tool.getBamIndexCommand(), "Bam Index");
-
+        System.out.println("Bam index created");
         if (flag) {
+            System.out.println("Calculating coverage");
             flag = tool.runJar(tool.getCoverageBedCommand(), "Coverage Bed");
+
         } else {
             OutputFrame.outputframe.setLog("ERROR : Bam indexing Failed, check log file for more details.");
             return false;
         }
+        
+        if (flag) {
+            System.out.println("RHD gene");
+            if (tool.getInputData().getRhdFile().exists()) {
+                flag = tool.runJar(tool.getCoverageBedCommand(tool.getInputData().getRhdFile()), "RHD Coverage");
+            } else {
+                flag = false;
+            }
+        } else {
+            OutputFrame.outputframe.setLog("ERROR : Bam statfailed, check log file for more details.");
+            return false;
+        }
+        if (flag) {
+            System.out.println("RHCE gene");
+            if (tool.getInputData().getRhceFile().exists()) {
+                flag = tool.runJar(tool.getCoverageBedCommand(tool.getInputData().getRhceFile()), "RHCE Coverage");
+            } else {
+                flag = false;
+            }
+        } else {
+            OutputFrame.outputframe.setLog("ERROR : RHD coverage failed, check log file for more details.");
+            return false;
+        }
+        if (flag) {
+            System.out.println("RHCE Exon 2");
+            if (tool.getInputData().getRhceExon2File().exists()) {
+                flag = tool.runJar(tool.getCoverageBedCommand(tool.getInputData().getRhceExon2File()), "RHCE Exon2 Coverage");
+            } else {
+                flag = false;
+            }
+        } else {
+            OutputFrame.outputframe.setLog("ERROR : RHCE coverage failed, check log file for more details.");
+            return false;
+        }
 
         if (flag) {
-            System.out.println(" ---- Done --- )");
+            System.out.println(" ---- Done --- ");
             OutputFrame.outputframe.setLog("BAM file processing finished!");
             return true;
         } else {
-            OutputFrame.outputframe.setLog("ERROR : Coverage bed failed, check log file for more details.");
+            OutputFrame.outputframe.setLog("ERROR : RHCE Exon2 coverage failed, check log file for more details.");
             return false;
         }
 

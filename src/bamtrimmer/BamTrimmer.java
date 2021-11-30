@@ -22,12 +22,18 @@ public class BamTrimmer {
      */
     public static void main(String[] args) {
          // TODO code application logic here
-
-         InputFrame.mainframe = new InputFrame();
-         InputFrame.mainframe.setLocationRelativeTo(null);
-         InputFrame.mainframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-         InputFrame.mainframe.setVisible(true);
-
+         
+        /* 
+        File cordFile = new File("/Users/mayurdivate/Documents/RBCeq/BamTrimmer-4/BamStatX.bed");
+        GeneCordinates g = new GeneCordinates(cordFile);
+        g.parseUserCordinates(cordFile.getParentFile());
+        */
+        
+        InputFrame.mainframe = new InputFrame();
+        InputFrame.mainframe.setLocationRelativeTo(null);
+        InputFrame.mainframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        InputFrame.mainframe.setVisible(true);
+        
          getPackageBase();
     }
 

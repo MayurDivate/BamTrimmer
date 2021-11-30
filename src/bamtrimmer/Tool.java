@@ -65,7 +65,7 @@ public class Tool {
             "I=" + this.inputData.getOutFxmateBamFile().getAbsolutePath(),
             "O=" + this.inputData.getFilteredBamFile().getAbsolutePath(),
             "Filter=includePairedIntervals",
-            "INTERVAL_LIST=" + this.packagePath.getAbsolutePath() + File.separator + ".." + File.separator + "BGG.bed",
+            "INTERVAL_LIST=" + this.packagePath.getAbsolutePath() + File.separator + ".." + File.separator + "bedfiles"+ File.separator + "BGG.bed",
             "USE_JDK_DEFLATER=true", "USE_JDK_INFLATER=true"
         };
         
@@ -95,10 +95,30 @@ public class Tool {
             "-jar",
             this.getPackagePath().getAbsolutePath() + File.separator + "lib" + File.separator + "bamstats04.jar",
             "-B",
-            this.packagePath.getAbsolutePath() + File.separator + ".." + File.separator + "BAMSTAtinput.bed",
+            this.packagePath.getAbsolutePath() + File.separator + ".." + File.separator + "bedfiles" + File.separator +  "BAMSTAtinput.bed",
             this.inputData.getDuplicateMarkedBamFile().getAbsolutePath(),
             "-o",
             this.inputData.getCoverageBed().getAbsolutePath()
+        };
+
+        return command;
+    }
+    
+    String[] getCoverageBedCommand(File bedFile) {
+        
+        String outName = bedFile.getName().replace(".bed", "_coverage.bed");
+        File outputCoverageFile = new File(this.inputData.getOutputDir() + File.separator + outName);
+        
+        
+        String[] command = {
+            "java",
+            "-jar",
+            this.getPackagePath().getAbsolutePath() + File.separator + "lib" + File.separator + "bamstats04.jar",
+            "-B",
+            bedFile.getAbsolutePath(),
+            this.inputData.getDuplicateMarkedBamFile().getAbsolutePath(),
+            "-o",
+            outputCoverageFile.getAbsolutePath()
         };
 
         return command;
@@ -117,7 +137,7 @@ public class Tool {
     }
 
     boolean runJar(String[] command, String header) {
-
+       
         try {
 
             ProcessBuilder picardProcessBuilder = new ProcessBuilder(command);
